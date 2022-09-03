@@ -1,24 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import SearchAppBar from "./components/SearchAppBar";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import HomePage from "./pages/HomePage";
+import { Route, Routes } from "react-router-dom";
+import { CssBaseline } from "@mui/material";
+import DetailPage from "./pages/DetailPage";
 
 function App() {
+  const [darkMode, setDarkMode] = useState(false);
+  const darkTheme = createTheme({
+    palette: {
+      mode: "dark",
+      primary: {
+        main: "#d63031",
+      },
+    },
+  });
+  const lightTheme = createTheme({
+    palette: {
+      mode: "light",
+    },
+  });
+  const handleChange = () => {
+    setDarkMode(!darkMode);
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
+      <CssBaseline />
+      <SearchAppBar
+        handleChange={handleChange}
+        darkMode={darkMode}
+        setDarkMode={setDarkMode}
+      />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/job/:id" element={<DetailPage />} />
+      </Routes>
+    </ThemeProvider>
   );
 }
 
