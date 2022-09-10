@@ -1,22 +1,46 @@
 import React from "react";
-import JobCard from "../components/JobCard";
-import Grid from "@mui/material/Grid";
-import Pagination from "../components/Pagination";
-import data from "../data.json";
+import JobPage from "../components/JobPage";
+import { Alert, Container } from "@mui/material";
+import { useEffect, useState } from "react";
+import apiService from "../app/apiService";
+import LoadingDisplay from "../components/LoadingDisplay";
 
-function App() {
+function HomePage() {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [jobs, setJobs] = useState("");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const response = await apiService.get("/jobs");
+        // console.log(response);
+        setJobs(response.data);
+        setError("");
+      } catch (error) {
+        setError(error.message);
+      }
+      setLoading(false);
+    };
+    fetchData();
+  }, []);
+
   return (
-    <div>
-      <Grid container spacing={2} sx={{ mt: 1 }}>
-        {data.map((job) => (
-          <Grid item xs={12} md={3}>
-            <JobCard job={job} />
-          </Grid>
-        ))}
-      </Grid>
-      <Pagination />
-    </div>
+    <Container sx={{ mt: 3 }}>
+      {loading ? (
+        <LoadingDisplay />
+      ) : (
+        <>
+          {error ? (
+            <Alert severity="error">{error}</Alert>
+          ) : (
+            <JobPage jobs={jobs}></JobPage>
+          )}
+        </>
+      )}
+    </Container>
   );
 }
 
-export default App;
+export default HomePage;

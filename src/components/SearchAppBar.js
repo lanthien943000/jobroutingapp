@@ -6,9 +6,14 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
-import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import LogoutIcon from "@mui/icons-material/Logout";
 import Button from "@mui/material/Button";
 import { Switch } from "@mui/material";
+import LoginIcon from "@mui/icons-material/Login";
+import { useNavigate } from "react-router-dom";
+import useAuth from "../hooks/useAuthentication";
+import { useSearchParams } from "react-router-dom";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -53,6 +58,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function SearchAppBar({ handleChange, darkMode, setDarkMode }) {
+  let navigate = useNavigate();
+  const auth = useAuth();
+
+  let [searchParams, setSearchParams] = useSearchParams();
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
@@ -82,13 +92,31 @@ export default function SearchAppBar({ handleChange, darkMode, setDarkMode }) {
             />
           </Search>
         </Toolbar>
-        <Box sx={{ display: "flex", alignItems: "center", mr: 3 }}>
-          <Button color="inherit">
-            <ExitToAppIcon sx={{ mr: 1.5 }} />
-            Sign in
-          </Button>
-          <Switch checked={darkMode} onChange={handleChange} />
-        </Box>
+        <>
+          <Box sx={{ display: "flex", alignItems: "center", mr: 3 }}>
+            {!auth.user ? (
+              <Button color="inherit" onClick={() => navigate(`/login`)}>
+                <LoginIcon sx={{ mr: 1.5 }} />
+                Log In
+              </Button>
+            ) : (
+              <>
+                <AccountCircleIcon sx={{ mr: 0.5 }} />
+                {auth.user.username}
+                <Button
+                  color="inherit"
+                  onClick={() => {
+                    auth.logout(() => navigate("/"));
+                  }}
+                >
+                  <LogoutIcon sx={{ mr: 1.5 }} />
+                  Log Out
+                </Button>
+              </>
+            )}
+            <Switch checked={darkMode} onChange={handleChange} />
+          </Box>
+        </>
       </AppBar>
     </Box>
   );

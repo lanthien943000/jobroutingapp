@@ -1,35 +1,28 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import SkillTagList from "./SkillTagList";
-import { useState } from "react";
 import { CardActionArea, Button, CardActions, Divider } from "@mui/material";
-import Modal from "@mui/material/Modal";
+import { useLocation, useNavigate } from "react-router-dom";
+import SkillTagList from "./SkillTagList";
 
-const styles = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  boxShadow: 24,
-  pt: 2,
-  px: 4,
-  pb: 3,
-  borderRadius: 2,
-};
+// const styles = {
+//   position: "absolute",
+//   top: "50%",
+//   left: "50%",
+//   transform: "translate(-50%, -50%)",
+//   width: 400,
+//   bgcolor: "background.paper",
+//   boxShadow: 24,
+//   pt: 2,
+//   px: 4,
+//   pb: 3,
+//   borderRadius: 2,
+// };
 
 export default function JobCard({ job }) {
-  const [open, setOpen] = useState("");
-  const handleOpen = (job) => {
-    setOpen(job);
-  };
-  const handleClose = () => {
-    setOpen();
-  };
+  const navigate = useNavigate();
+  const location = useLocation();
 
   return (
     <Card sx={{ maxWidth: 345, height: 300, position: "relative" }}>
@@ -60,62 +53,14 @@ export default function JobCard({ job }) {
       >
         <div>
           <Button
-            onClick={() => handleOpen(job)}
             variant="contained"
             size="small"
+            onClick={() => navigate(`/jobs/${job.id}`)}
+            state={{ from: location }}
+            to={`/jobs/${job.id}`}
           >
             Learn More
           </Button>
-          <Modal
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="parent-modal-title"
-            aria-describedby="parent-modal-description"
-          >
-            <Box
-              sx={{
-                ...styles,
-                width: 500,
-                display: "flex",
-                flexDirection: "column",
-              }}
-            >
-              <Typography
-                gutterBottom
-                variant="h4"
-                component="div"
-                sx={{ mt: 2 }}
-              >
-                {job.title}
-              </Typography>
-
-              <Divider variant="middle" sx={{ mb: 1 }} />
-
-              <Typography variant="body2" color="text.primary" sx={{ mb: 1 }}>
-                {job.description}
-              </Typography>
-
-              <Typography
-                gutterBottom
-                variant="h5"
-                component="div"
-                sx={{ mt: 2 }}
-              >
-                Skills
-              </Typography>
-
-              <SkillTagList job={job} />
-
-              <Typography
-                gutterBottom
-                variant="h5"
-                component="div"
-                sx={{ mt: 2 }}
-              >
-                City: {job.city}
-              </Typography>
-            </Box>
-          </Modal>
         </div>
       </CardActions>
     </Card>

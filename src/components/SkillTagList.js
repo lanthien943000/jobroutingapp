@@ -8,10 +8,11 @@ export default function MiddleDividers({ job }) {
     <Box
       sx={{ display: "flex", flexDirection: "row", flexWrap: "wrap", mb: 3 }}
     >
-      {job.skills.map((jobSkill, index) => (
+      {job.skills.slice(0, 4).map((skill, index) => (
         <Typography key={index} component={"span"}>
           <Chip
-            label={jobSkill}
+            key={index}
+            label={skill}
             sx={{ mr: 0.5, mb: 1, borderRadius: 2 }}
             color="primary"
           />
