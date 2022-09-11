@@ -14,6 +14,7 @@ function App() {
   // const handleChange = () => {
   //   setDarkMode(!darkMode);
   // };
+  console.log(setDarkMode)
   const darkTheme = createTheme({
     palette: {
       mode: "dark",

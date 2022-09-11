@@ -7,7 +7,7 @@ import JobCard from "./JobCard";
 function JobPage({ jobs }) {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(6);
-
+  console.log(setLimit);
   const handleChange = (event, value) => {
     setPage(value);
   };
