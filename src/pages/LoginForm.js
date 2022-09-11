@@ -123,7 +123,7 @@ function LoginForm() {
           >
             <FormCheckBox
               label="remember me"
-              sx={{ margin: "0 auto" }}
+              sx={{ margin: "0 auto", color: "black" }}
               name="remember"
             />
           </Stack>
@@ -143,7 +143,7 @@ function LoginForm() {
                 Forgot password ?
               </Link>
             </Typography>
-            <Typography>
+            <Typography color="text.primary">
               Do you have an account ?{" "}
               <Link sx={{ textDecoration: "none" }} href="#">
                 Sign Up
