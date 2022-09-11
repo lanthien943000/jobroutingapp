@@ -12,7 +12,6 @@ import { Switch } from "@mui/material";
 import LoginIcon from "@mui/icons-material/Login";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuthentication";
-import { useSearchParams } from "react-router-dom";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 const Search = styled("div")(({ theme }) => ({
@@ -60,8 +59,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function SearchAppBar({ handleChange, darkMode, setDarkMode }) {
   let navigate = useNavigate();
   const auth = useAuth();
-
-  let [searchParams, setSearchParams] = useSearchParams();
 
   return (
     <Box sx={{ flexGrow: 1 }}>

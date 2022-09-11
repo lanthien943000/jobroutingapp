@@ -11,9 +11,9 @@ import Layout from "./layout-require/layouts";
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
-  const handleChange = () => {
-    setDarkMode(!darkMode);
-  };
+  // const handleChange = () => {
+  //   setDarkMode(!darkMode);
+  // };
   const darkTheme = createTheme({
     palette: {
       mode: "dark",
